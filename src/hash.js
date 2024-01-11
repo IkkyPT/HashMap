@@ -2,6 +2,7 @@ import linkedList from "./linkedList";
 
 class HashMap {
 
+    // hash constructor
     constructor() {
             this.bucketSize = 16;
             this.loadFactor = 0.75;
@@ -9,6 +10,7 @@ class HashMap {
             this.bucket = Array(16).fill(null).map(() => []);
     };
     
+    //  takes a value and produces a hash code with it.
     hash(key) {
         let hashValue = 0;
         for (let i = 0; i < key.length; i++) {
@@ -17,23 +19,21 @@ class HashMap {
         return hashValue % this.bucketSize;
     }
 
+    // adds a key-value pair to a hash table, handling collisions and triggering a resize if needed.
     set(key, value) {
         const index = this.hash(key);
         const bucketIndex = this.bucket[index];
 
-        // Iterate through the existing subBuckets
         for (let i = 0; i < bucketIndex.length; i++){
             const subBucket = bucketIndex[i];
 
             if(subBucket.contains(key)){
-                // Check if key already contains in the subBucket, update its value otherwise
                 subBucket.append(value);
                 return;
             };
             
         };
 
-        // Check if the bucket is empty if so append the key and value to their respective nodes
         if(bucketIndex !== key) {
             const subBucket = linkedList.createLinkedList();
             bucketIndex.push(subBucket);
@@ -48,6 +48,7 @@ class HashMap {
         }
     }
 
+    // double bucket size, rehashing existing key-value pairs, and updating the internal state accordingly.
     resize() {
         const oldBucket = this.bucket;
         this.bucketSize *= 2;
@@ -65,7 +66,8 @@ class HashMap {
     
         this.bucket = newBucket;
     }
-    
+
+    // get method for the hash table, retrieving the string representation of a value associated with a given key if it exists; otherwise, it returns false.
     get(key) {
         const index = this.hash(key);
         const bucketData = this.bucket;
@@ -79,6 +81,7 @@ class HashMap {
          return false;
     }
     
+    // checking if a given key exists in the table and returning true if found, otherwise returning false.
     has(key) {
         const index = this.hash(key);
         const bucketData = this.bucket;
@@ -92,6 +95,7 @@ class HashMap {
          return false;
     }
 
+    // remove defined key from the hash table
     remove(key) {
         const index = this.hash(key);
         const bucketData = this.bucket;
@@ -107,6 +111,7 @@ class HashMap {
         return `The key "${key}" doesn't exist in the hash map.`;
     }
 
+    // return the amount of key that exist in the hash table
     length() {
         let count = 0;
         const bucketData = this.bucket;
@@ -118,6 +123,19 @@ class HashMap {
         }
 
         return count;
+    }
+
+    // removes all the entries in the hash map
+    clear() {
+        let index = 0;
+        const bucketData = this.bucket;
+        while (bucketData.length > index){
+            if(bucketData[index][0]) {
+                const key = bucketData[index][0].head.value;
+                this.remove(key);
+            }
+            index++;
+        }
     }
     
 }
@@ -135,6 +153,6 @@ myHashMap.resize();
 console.log(myHashMap.bucket);
 console.log(myHashMap.has("FC"));
 console.log(myHashMap.get("FC"));
-console.log(myHashMap.remove("FC"));
 console.log(myHashMap.bucket);
 console.log(myHashMap.length());
+console.log(myHashMap.bucket);
