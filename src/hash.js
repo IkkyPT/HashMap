@@ -177,24 +177,33 @@ class HashMap {
     
         return values;
     }
-    
-}
 
+    // returns an array containing each key-value pair as [key, value] arrays
+    entries() {
+        const result = [];
+
+        for (let i = 0; i < this.bucket.length; i++) {
+            const bucketIndex = this.bucket[i];
+
+            if (bucketIndex && bucketIndex.length > 0) {
+                let current = bucketIndex[0].head;
+
+                while (current) {
+                    const key = bucketIndex[0].head.value;
+                    const value = current.nextNode ? current.nextNode.value : null;
+
+                    if (value !== null) {
+                        result.push([key, value]);
+                    }
+
+                    current = current.nextNode;
+                }
+            }
+        }
+
+        return result;
+    }    
+}
 
 const myHashMap = new HashMap();
 
-myHashMap.set("RC", "Ricardo Carvalho");
-myHashMap.set("RC", "Ricardo Cszx")
-myHashMap.set("RC", "Ricardo Csdadsa")
-myHashMap.set("FC", "Ficardo Csdadsa")
-myHashMap.set("FC", "Fiordsa Csdadsa")
-console.log(myHashMap.bucket);
-myHashMap.resize();
-console.log(myHashMap.bucket);
-console.log(myHashMap.has("FC"));
-console.log(myHashMap.get("FC"));
-console.log(myHashMap.bucket);
-console.log(myHashMap.length());
-console.log(myHashMap.bucket);
-console.log(myHashMap.keys());
-console.log(myHashMap.values());
