@@ -133,6 +133,7 @@ class HashMap {
             if(bucketData[index][0]) {
                 const key = bucketData[index][0].head.value;
                 this.remove(key);
+                this.bucketSize--;
             }
             index++;
         }
@@ -151,6 +152,30 @@ class HashMap {
             index++;
         }
         return keys;
+    }
+
+    // returns an array containing all the values.
+    values() {
+        const keys = this.keys();
+        const values = [];
+    
+        for (let i = 0; i < keys.length; i++) {
+            const key = keys[i];
+            const index = this.hash(key);
+    
+            if (this.bucket[index] && this.bucket[index].length > 0) {
+                let current = this.bucket[index][0].head;
+    
+                while (current) {
+                    if (current.value !== key) {
+                        values.push(current.value);
+                    }
+                    current = current.nextNode;
+                }
+            }
+        }
+    
+        return values;
     }
     
 }
@@ -172,3 +197,4 @@ console.log(myHashMap.bucket);
 console.log(myHashMap.length());
 console.log(myHashMap.bucket);
 console.log(myHashMap.keys());
+console.log(myHashMap.values());
