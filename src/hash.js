@@ -137,6 +137,21 @@ class HashMap {
             index++;
         }
     }
+
+    // returns an array containing all the keys inside the hash map.
+    keys() {
+        let index = 0;
+        const keys = [];
+        const bucketData = this.bucket;
+        while (bucketData.length > index){
+            if(bucketData[index][0]) {
+                const key = bucketData[index][0].head.value;
+                keys.push(key);
+            }
+            index++;
+        }
+        return keys;
+    }
     
 }
 
@@ -156,3 +171,4 @@ console.log(myHashMap.get("FC"));
 console.log(myHashMap.bucket);
 console.log(myHashMap.length());
 console.log(myHashMap.bucket);
+console.log(myHashMap.keys());
