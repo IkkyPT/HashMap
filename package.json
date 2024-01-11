@@ -1,8 +1,8 @@
 {
-  "name": "LinkedLists",
+  "name": "HashMap",
   "version": "1.0.0",
   "description": "",
-  "main": "linkedList.js",
+  "main": "hash.js",
   "scripts": {
     "lint": "eslint .",
     "lint-fix": "eslint --fix .",
